@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+# secrets live in the app's config dir, never here; these are belt and braces
+*.key
+*.session
+*.session-journal
+config.json

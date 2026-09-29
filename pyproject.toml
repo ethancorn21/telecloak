@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "telecloak"
+version = "0.1.0"
+description = "End-to-end encrypted Telegram messages with a pre-shared key"
+requires-python = ">=3.11"
+dependencies = ["cryptography>=46", "telethon>=1.40,<2"]
+
+[project.scripts]
+telecloak-app = "telecloak.app:main"
+
+[tool.setuptools]
+packages = ["telecloak"]

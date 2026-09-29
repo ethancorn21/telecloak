@@ -1,0 +1,16 @@
+#!/bin/sh
+# telecloak: start the telecloak app in the background and give the terminal back. Closing the terminal does not
+# stop the app (nohup); quit it from its window. Install once: ln -s "$PWD/bin/telecloak" ~/.local/bin/telecloak
+# Output (errors only; never message text) goes to ~/Library/Logs/telecloak.log.
+here=$(dirname "$(readlink -f "$0")")
+app="$here/../.venv/bin/telecloak-app"
+log="$HOME/Library/Logs/telecloak.log"
+[ -x "$app" ] || { echo "telecloak is not installed: cd $(dirname "$here") && .venv/bin/pip install -e ."; exit 1; }
+nohup "$app" >> "$log" 2>&1 &
+pid=$!
+sleep 1
+# still running = started (or starting); gone already = it refused or crashed, so show why
+if ! kill -0 "$pid" 2>/dev/null; then
+  tail -n 3 "$log"
+  exit 1
+fi
